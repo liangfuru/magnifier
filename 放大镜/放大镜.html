@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	*{padding: 0;margin: 0;}
+	.obj{width: 300px;height: 200px;border:1px solid black;display: block;position: relative;float: left;cursor: pointer;}
+	.dv{width: 100px;height: 100px;background: rgba(122,123,122,0.4);position: absolute;left: 0;top: 0;display: none;}
+	.obj img{width: 300px;height: 200px;}
+	.rightShow{width: 400px;height: 400px;overflow: hidden;border:1px solid black;display: none;}
+	.pic{width: 1200px;height: 800px;}
+	</style>
+</head>
+<body>
+	<div id="obj" class="obj">
+		<img src="images/2.jpg" id="leftimg">
+		<div class="dv" id="dv"></div>
+	</div>
+	<div id="rightShow" class="rightShow">
+		<img src="images/2.jpg" class="pic">
+		<div class="ds" id="ds"></div>
+	</div>
+</body>
+<script type="text/javascript">
+	var obj=document.getElementById("obj");
+	console.log(obj)
+	var leftimg=document.getElementById("leftimg");
+	console.log(leftimg)
+	var dv=document.getElementById("dv");
+	console.log(dv)
+	var rightShow=document.getElementById("rightShow")
+	console.log(rightShow)
+
+	obj.onmousemove=function(e){
+		var e=event||window.event
+		dv.style.display="block";
+		// 写在获取值前面，就获取不到自身的宽度
+		rightShow.style.display="block";
+		dv.style.cursor="move";
+		var lefts=e.clientX-obj.offsetLeft-dv.offsetWidth/2;
+		var tops=e.clientY-obj.offsetTop-dv.offsetHeight/2;
+		
+		var maxX=obj.clientWidth-dv.clientWidth;
+		var maxY=obj.clientHeight-dv.clientHeight;
+		if (lefts<0) {
+			lefts=0;
+		}
+		if (lefts>maxX) {
+			lefts=maxX;
+		};
+		if (tops<0) {
+			tops=0;
+		}
+		if (tops>maxY) {
+			tops=maxY;
+		};
+
+		dv.style.left=lefts+"px";
+		dv.style.top=tops+"px";
+		num=rightShow.clientWidth/dv.clientWidth
+
+		rightShow.scrollLeft=lefts*num;
+		rightShow.scrollTop=tops*num;
+
+
+	}
+
+	obj.onmouseout=function(){
+		dv.style.display="none";
+		rightShow.style.display="none"
+
+	}
+
+	
+</script>
+</html>
